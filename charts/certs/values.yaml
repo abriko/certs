@@ -8,7 +8,7 @@ service:
 image:
   registry: ghcr.io/abriko
   repository: certs
-  tag: 1.0.0
+  tag: v1.0.0
 
 schedule: "0 0,12 * * *"
 

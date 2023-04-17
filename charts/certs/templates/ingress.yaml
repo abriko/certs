@@ -1,5 +1,5 @@
 {{- if .Values.demo.enabled -}}
-apiVersion: extensions/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: {{ template "helper.fullname" . }}-demo-backend
@@ -33,9 +33,12 @@ spec:
   - host: {{ . | quote }}
     http:
       paths:
-        - path: /certs-demo-backend/?(.*)
+        - path: /certs-demo-backend/
+          pathType: Prefix
           backend:
-            serviceName: {{ template "helper.fullname" $main }}-demo-backend
-            servicePort: {{ $main.Values.demo.service.port }}
+            service:
+              name: {{ template "helper.fullname" $main }}-demo-backend
+              port:
+                number: {{ $main.Values.demo.service.port }}
   {{- end -}}
 {{- end }}
