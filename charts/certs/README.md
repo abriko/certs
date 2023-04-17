@@ -77,7 +77,7 @@ spec:
 3/ Install `Certs` chart:
 ```
 # Add the `Certs` Helm repository
-helm repo add certs https://math-nao.github.io/certs/charts
+helm repo add certs https://abriko.github.io/certs/charts
 
 # Update your local Helm chart repository cache
 helm repo update
