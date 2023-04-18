@@ -1,0 +1,22 @@
+apiVersion: v1
+entries:
+  certs:
+  - annotations:
+      category: Security
+    apiVersion: v2
+    appVersion: 1.21.0
+    created: "2023-04-18T01:02:04.228619409Z"
+    description: A Helm chart for managing Let's encrypt certificates
+    digest: 7bc87853ccb9464f85c12fc9f5a0dfc6e76964a0989aa3c0c4bb5073f3a6c10c
+    home: https://github.com/abriko/certs
+    maintainers:
+    - name: Abriko
+    name: certs
+    sources:
+    - https://github.com/math-nao/certs
+    - https://github.com/abriko/certs
+    type: application
+    urls:
+    - https://github.com/abriko/certs/releases/download/certs-v1.0.1/certs-v1.0.1.tgz
+    version: v1.0.1
+generated: "2023-04-18T01:02:04.228627009Z"
