@@ -10,6 +10,8 @@ jobs:
   helm-release:
     runs-on: ubuntu-latest
     name: Release Helm Chart
+    permissions:
+      contents: write
     steps:
       - name: Checkout
         uses: actions/checkout@v2
