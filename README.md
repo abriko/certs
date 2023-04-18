@@ -1,1 +1,1 @@
-certs/README.md
+charts/certs/README.md
