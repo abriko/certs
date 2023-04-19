@@ -6,9 +6,17 @@ on:
 
 jobs:
 
+  build_push:
+    uses: ./.github/workflows/image.yaml
+    secrets: inherit
+    permissions:
+      packages: write
+      contents: read
+
   lint-test:
     runs-on: ubuntu-latest
     name: Helm Chart Lint
+    needs: build_push
     env:
       CT_CHART_DIRS: charts
       CT_TARGET_BRANCH: $GITHUB_BASE_REF
@@ -44,6 +52,12 @@ jobs:
       - name: Create kind cluster
         if: steps.list-changed.outputs.changed == 'true'
         uses: helm/kind-action@v1.4.0
+
+      - name: Prepare test value
+        run: |
+          mkdir $CT_CHART_DIRS/certs/ci
+          echo "image:" > $CT_CHART_DIRS/certs/ci/image-values.yaml
+          echo "  tag: ${{ needs.build_push.outputs.tag }}" >> $CT_CHART_DIRS/certs/ci/image-values.yaml
 
       - name: Run chart-testing (install)
         if: steps.list-changed.outputs.changed == 'true'

@@ -4,6 +4,10 @@ on:
   push:
     branches:
       - master
+    paths:
+      - .github/workflows/helm-release.yaml
+      - "charts/**"
+
   workflow_dispatch:
 
 jobs:

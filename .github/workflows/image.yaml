@@ -1,21 +1,14 @@
 name: Build image
 
 on:
-  push:
-    # Publish `master` as Docker `latest` image.
-    branches:
-      - master
-      - feature/*
-
-    # Publish `v1.2.3` tags as releases.
-    tags:
-      - v*
-
-    paths-ignore:
-      - "README.md"
-
-  # Run tests for any PRs.
-  pull_request:
+  workflow_call:
+    outputs:
+      image:
+        description: "Image uri"
+        value: ${{ jobs.push.outputs.image }}
+      tag:
+        description: "Image tag"
+        value: ${{ jobs.push.outputs.tag }}
 
 env:
   IMAGE_NAME: certs
@@ -28,6 +21,9 @@ jobs:
     permissions:
       packages: write
       contents: read
+    outputs:
+      image: ${{ steps.push.outputs.image }}
+      tag: ${{ steps.push.outputs.tag }}
 
     steps:
       - uses: actions/checkout@v3
@@ -44,6 +40,7 @@ jobs:
         run: echo "${{ secrets.CR_PAT }}" | docker login ghcr.io -u $ --password-stdin
 
       - name: Push image
+        id: push
         run: |
           IMAGE_ID=ghcr.io/${{ github.repository_owner }}/$IMAGE_NAME
 
@@ -54,8 +51,10 @@ jobs:
           # Strip "v" prefix from tag name
           [[ "${{ github.ref }}" == "refs/tags/"* ]] && VERSION=$(echo $VERSION | sed -e 's/^v//')
           # Use Docker `latest` tag convention
-          [ "$VERSION" == "main" ] && VERSION=latest
+          [ "$VERSION" == "master" ] && VERSION=latest
           echo IMAGE_ID=$IMAGE_ID
           echo VERSION=$VERSION
           docker tag $IMAGE_NAME $IMAGE_ID:$VERSION
           docker push $IMAGE_ID:$VERSION
+          echo "image=$IMAGE_ID" >> $GITHUB_OUTPUT
+          echo "tag=$VERSION" >> $GITHUB_OUTPUT
