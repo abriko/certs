@@ -31,7 +31,8 @@ image.tag | `tag` | Set the docker image tag to use.
 schedule | `0 0,12 * * *` | Set the job schedule to run dns validation for certificate renew.
 backoffLimit | `1` | Specify the number of retries before considering a job as failed.
 activeDeadlineSeconds | `600` | Set an active deadline for terminatting a job.
-ttlSecondsAfterFinished | `120` | Set a TTL for cleaning a job.
+ttlSecondsAfterFinished.enable | `false` | Add ttlSecondsAfterFinished to pod when value is set to `true`.
+ttlSecondsAfterFinished.ttl | `120` | Set a TTL for cleaning a job.
 successfulJobsHistoryLimit | `3` | Specify how many completed jobs should be kept.
 manageAllNamespaces | `false` | Whether or not `certs` should manage all namespaces for generating certificates.
 namespacesWhitelist | `<empty>` | Run certs only for a namespace whitelist separated by a space. Useful when `manageAllNamespaces` is set to `true`.
@@ -52,7 +53,7 @@ demo.hosts | `- "example.com"` | Set the list of your hosts to generate Let's En
 
 2/ Register your ingress, for example:
 ```
-apiVersion: extensions/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: test-ingress
@@ -69,10 +70,13 @@ spec:
   - host: sslexample.foo.com
     http:
       paths:
-      - path: /
-        backend:
-          serviceName: service1
-          servicePort: 80
+      - backend:
+          service:
+            name: service1
+            port:
+              number: 80
+        path: /
+        pathType: Prefix
 ```
 
 3/ Install `Certs` chart:
