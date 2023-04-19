@@ -10,7 +10,9 @@ metadata:
 spec:
   backoffLimit: {{ .Values.backoffLimit }}
   activeDeadlineSeconds: {{ .Values.activeDeadlineSeconds }}
-  ttlSecondsAfterFinished: {{ .Values.ttlSecondsAfterFinished }}
+  {{- if .Values.ttlSecondsAfterFinished.enabled -}}
+  ttlSecondsAfterFinished: {{ .Values.ttlSecondsAfterFinished.ttl }}
+  {{- end }}
   template:
     metadata:
       labels:

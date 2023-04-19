@@ -27,10 +27,25 @@
       "form": true
     },
     "ttlSecondsAfterFinished": {
-      "type": "integer",
-      "title": "Set a TTL for cleaning a job",
-      "description": "Set a TTL for cleaning a job.",
-      "form": true
+        "type": "object",
+        "required": [
+          "enabled",
+          "ttl"
+        ],
+        "properties": {
+          "enabled": {
+            "type": "boolean",
+            "title": "Enable ttlSecondsAfterFinished",
+            "description": "Add ttlSecondsAfterFinished to pod when value is set to `true`",
+            "form": true
+          },
+          "ttl": {
+            "type": "integer",
+            "title": "Set a TTL for cleaning a job",
+            "description": "Set a TTL for cleaning a job.",
+            "form": true
+          }
+        }
     },
     "successfulJobsHistoryLimit": {
       "type": "integer",
