@@ -1,17 +1,18 @@
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![Artifact HUB](https://img.shields.io/endpoint?url=https://artifacthub.io/badge/repository/certs)](https://artifacthub.io/packages/search?repo=certs)
-[![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://paypal.me/mathnao)
 
 # A Let's Encrypt certificates manager for Kubernetes
 
 This chart use the [acme.sh][acme-sh] script to generate Let's Encrypt certifcates with DNS validation only; it uses Kubernetes `Job` to get and renew certificates.
+
+This project is a fork for [math-nao/certs](https://github.com/math-nao/certs), since the original project is no longer maintained.
 
 ## Ingress annotations
 
 Name  | Example | Description
 ------  | ----- | -----------
 acme.kubernetes.io/enable | `"true"` | Enable `Certs` on this ingress when value is set to `"true"`.<br />Default value is empty.
-acme.kubernetes.io/dns | `"dns_gd"` | Set the `acme.sh` `--dns` parameter: (see [https://github.com/Neilpang/acme.sh/wiki/dnsapi] for all `--dns` supported values).<br />Default value is empty.
+acme.kubernetes.io/dns | `"dns_gd"` | Set the `acme.sh` `--dns` parameter: (see [https://github.com/acmesh-officia/acme.sh/wiki/dnsapi] for all `--dns` supported values).<br />Default value is empty.
 acme.kubernetes.io/staging | `"true"` | Enable acme staging certificate validation when value is set to `"true"`.<br />Default value is empty.
 acme.kubernetes.io/add-args | `"--keylength ec-256"` | Add more arguments to `acme.sh` command used to generate certificates.<br />Default value is empty.
 acme.kubernetes.io/cmd-to-use | `"acme.sh -h"` | Replace the `acme.sh` command to use for generating certificates.<br />Default value is empty.
@@ -24,7 +25,7 @@ acme.kubernetes.io/on-error-cmd | `"curl -X POST -H 'Content-type: application/j
 
 Parameter  | Default | Description
 ------  | ----- | -----------
-image.registry | `mathnao` | Set the docker image registry to use.
+image.registry | `ghcr.io/abriko` | Set the docker image registry to use.
 image.repository | `certs` | Set the docker image repository to use.
 image.tag | `tag` | Set the docker image tag to use.
 schedule | `0 0,12 * * *` | Set the job schedule to run dns validation for certificate renew.
@@ -96,7 +97,7 @@ helm install \
 schedule: "0 2,14 * * *"
 
 # add all necessary environment variables for acme.sh dns validation
-# see https://github.com/Neilpang/acme.sh/wiki/dnsapi
+# see https://github.com/acmesh-officia/acme.sh/wiki/dnsapi
 env:
 - name: GD_Key
   value: XXXX
@@ -109,7 +110,7 @@ Note: By setting `EAB_KID` and `EAB_HMAC_KEY` environment variables, `zerossl` C
 4/ Visit `https://sslexample.foo.com` webpage, you should have a valid Let's Encrypt certificate
 
 ## Acknowledgments
-acme.sh: https://github.com/Neilpang/acme.sh
+acme.sh: https://github.com/acmesh-officia/acme.sh
 
 ## License
 This code is distributed under the [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0), see LICENSE for more information.
@@ -117,6 +118,4 @@ This code is distributed under the [Apache License, Version 2.0](http://www.apac
 ## Donates
 Your donation helps to maintain `Certs`:
 
-[![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://paypal.me/mathnao)
-
-[acme-sh]: https://github.com/Neilpang/acme.sh
+[acme-sh]: https://github.com/acmesh-official/acme.sh

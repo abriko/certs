@@ -11,7 +11,7 @@ on:
       - v*
 
     paths-ignore:
-      - "README.md"
+      - "*/README.md"
       - "charts/**"
   
   workflow_dispatch:
