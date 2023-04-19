@@ -18,7 +18,9 @@ debug: false
 
 activeDeadlineSeconds: 600
 
-ttlSecondsAfterFinished: 120
+ttlSecondsAfterFinished:
+  enabled: false
+  ttl: 120
 
 successfulJobsHistoryLimit: 3
 
