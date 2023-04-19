@@ -57,7 +57,7 @@ jobs:
         run: |
           mkdir $CT_CHART_DIRS/certs/ci
           echo "image:" > $CT_CHART_DIRS/certs/ci/image-values.yaml
-          echo "tag: ${{ needs.build_push.outputs.tag }}" >> $CT_CHART_DIRS/certs/ci/image-values.yaml
+          echo "  tag: ${{ needs.build_push.outputs.tag }}" >> $CT_CHART_DIRS/certs/ci/image-values.yaml
 
       - name: Run chart-testing (install)
         if: steps.list-changed.outputs.changed == 'true'
