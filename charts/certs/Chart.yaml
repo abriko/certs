@@ -1,7 +1,7 @@
 apiVersion: v2
 name: certs
 description: A Helm chart for managing Let's encrypt certificates
-version: v1.1.1
+version: v1.1.2
 appVersion: "1.21.0"
 home: https://abriko.github.io/certs
 type: application
