@@ -92,7 +92,7 @@ k8s_api_call() {
   curl -i -X "${METHOD}" --cacert "${CA_FILE}" -H "Authorization: Bearer $TOKEN" -H 'Accept: application/json' -H "Content-Type: ${CONTENT_TYPE}" https://${APISERVER}${URI} ${ARGS} -o ${RES_FILE}
   
   cat ${RES_FILE} > /dev/stderr
-  local STATUS_CODE=$(cat ${RES_FILE} | grep 'HTTP/' | awk '{printf $2}')
+  local STATUS_CODE=$(cat ${RES_FILE} | grep 'Connection established' | awk '{printf $2}')
   add_to_report "$(cat "${RES_FILE}")"
   rm -f "${RES_FILE}"
   echo ${STATUS_CODE}
